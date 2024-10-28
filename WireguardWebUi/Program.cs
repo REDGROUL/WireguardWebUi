@@ -1,10 +1,13 @@
+using WireguardWebUi.Builders;
 using WireguardWebUi.Utils;
+using WireguardWebUi.Utils.Linux;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<CliUtil>();
+builder.Services.AddSingleton<WgConfigsBuilder>();
 builder.Services.AddSingleton<WgUtils>();
 builder.Services.AddSingleton<WgQrGenerator>();
 var app = builder.Build();

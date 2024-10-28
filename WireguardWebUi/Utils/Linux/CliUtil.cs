@@ -1,12 +1,12 @@
 using System.Diagnostics;
 
-namespace WireguardWebUi.Utils;
+namespace WireguardWebUi.Utils.Linux;
 
 public class CliUtil
 {
     public string RunCommand(string command)
     {
-        var processInfo = new ProcessStartInfo("bash", $"-c \"sudo {command}\"")
+        var processInfo = new ProcessStartInfo("bash", $"-c {command}")
         {
             RedirectStandardOutput = true,
             RedirectStandardError = true,

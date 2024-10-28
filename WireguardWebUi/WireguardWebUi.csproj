@@ -8,10 +8,15 @@
 
     <ItemGroup>
       <PackageReference Include="QRCoder" Version="1.6.0" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
       <PackageReference Include="SkiaSharp" Version="2.88.8" />
       <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" />
       <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
       <PackageReference Include="ZXing.Net" Version="0.16.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\UserConfigs\" />
     </ItemGroup>
 
 </Project>
