@@ -6,7 +6,7 @@ public class CliUtil
 {
     public string RunCommand(string command)
     {
-        var processInfo = new ProcessStartInfo("bash", $"-c {command}")
+        var processInfo = new ProcessStartInfo("bash", "-c \"" + command + "\"")
         {
             RedirectStandardOutput = true,
             RedirectStandardError = true,

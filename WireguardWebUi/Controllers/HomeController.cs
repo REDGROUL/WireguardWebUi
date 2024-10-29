@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WireguardWebUi.Models;
 using WireguardWebUi.Utils;
+using WireguardWebUi.Utils.Linux;
 
 namespace WireguardWebUi.Controllers;
 
@@ -20,9 +21,17 @@ public class HomeController : Controller
         _conf = configuration;
     }
 
-    public string? Index()
+    public IActionResult Index()
     {
-        return _wgUtils.GetStatus();
+        string clientConfig = _wgUtils.GenerateClientConfig("sometest");
+        string serverConfig = _wgUtils.AddClientToServerConfig();
+        string qr = _wgQrGenerator.GenerateBase64(clientConfig);
+
+        ViewData["client"] = clientConfig;
+        ViewData["serverConfig"] = serverConfig;
+        ViewData["qr"] = qr;
+        
+        return View();
     }
 
     public IActionResult Privacy()
@@ -35,19 +44,6 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-    [HttpGet("generate-qr")]
-    public IActionResult GenerateWireGuardQrCode()
-    {
-        string client = _wgUtils.GenerateClientConfig("sss");
-       Console.WriteLine("sss");
-
-        // Генерация QR-кода из конфигурации
-        byte[] qrCodeImage = _wgQrGenerator.GenerateQrCode(client);
-
-
-        _logger.Log(LogLevel.Information, qrCodeImage.ToString());
-        // Возвращаем QR-код в формате PNG
-        return File(qrCodeImage, "image/png");
-    }
+    
     
 }

@@ -10,8 +10,13 @@ public class WgConfigsBuilder
     public string clientPublicKey{ get; set; }
     public string clientAddressPort { set; get; }
     public string clientPresharedKey{ get; set; }
-    
+
+    public ushort clientNum { get; set; }
+
     public string serverPublicKey{ get; set; }
+    public string serverIp { get; set; }
+
+    public ushort serverPort { get; set; }
     public string dns { get; set; }
     
     public string BuildClientConfig()
@@ -19,14 +24,14 @@ public class WgConfigsBuilder
         StringBuilder sb = new();
         sb.AppendLine("[Interface]");
         sb.AppendLine($"PrivateKey = {clientPrivateKey}");
-        sb.AppendLine($"Address = {clientAddressPort},fd42:42:42::8/128");
+        sb.AppendLine($"Address = {clientAddressPort},fd42:42:42::{clientNum}/128");
         sb.AppendLine($"DNS = {dns}");
         sb.AppendLine();
         sb.AppendLine("[Peer]");
         sb.AppendLine($"PublicKey = {serverPublicKey}");
         sb.AppendLine($"PresharedKey = {clientPresharedKey}");
-        sb.AppendLine("Endpoint = 93.3.3.3");
-        sb.AppendLine("AllowedIPs = 0.0.0.0/0, ::0,fd42:42:42::8/128");
+        sb.AppendLine($"Endpoint = {serverIp}:{serverPort}");
+        sb.AppendLine($"AllowedIPs = 0.0.0.0/0, ::0,fd42:42:42::{clientNum}/128");
         return sb.ToString();
     }
 
